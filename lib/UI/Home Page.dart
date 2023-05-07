@@ -36,16 +36,6 @@ class HomePageUi extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("EMAIL: ",style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),),
-                Text(user.email.toString()),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 Text("Account created on: ",style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16
@@ -53,40 +43,36 @@ class HomePageUi extends StatelessWidget {
                 Text(user.metadata.creationTime.toString()),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("UID: ",style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),),
-                Text(user.uid.toString()),
-              ],
-            ),
 
 
 
-            StreamBuilder<DocumentSnapshot>(
-              stream: usersCollection.doc(user.uid).snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading...');
-                }
-
-                if (!snapshot.hasData || !snapshot.data!.exists) {
-                  return Text('User not found!');
-                }
-
-                final userData = snapshot.data;
-                final username = userData?.get("phoneNumber");
-                final phone = userData?.get("phoneNumber");// Extract the user data from the snapshot
-                return Text('Phone: ${phone ?? 'Not found'}');
-              },
-            ),
+            // StreamBuilder<DocumentSnapshot>(
+            //   stream: usersCollection.doc(user.uid).snapshots(),
+            //   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            //     if (snapshot.hasError) {
+            //       return Text('Error: ${snapshot.error}');
+            //     }
+            //
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return Text('Loading...');
+            //     }
+            //
+            //     if (!snapshot.hasData || !snapshot.data!.exists) {
+            //       return Text('User not found!');
+            //     }
+            //
+            //     final userData = snapshot.data;
+            //     final username = userData?.get("phoneNumber");
+            //     final phone = userData?.get("phoneNumber");// Extract the user data from the snapshot
+            //     return Column(
+            //       children: [
+            //         Text('username: ${username ?? 'Not found'}'),
+            //         Text('Phone: ${phone ?? 'Not found'}'),
+            //       ],
+            //     );
+            //   },
+            // ),
 
 
 

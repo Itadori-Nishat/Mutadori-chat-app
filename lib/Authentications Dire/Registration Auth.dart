@@ -31,13 +31,15 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
   }
 
   Future addUserDetails(String username, String email, int phone,
-      {required String uid}) async {
+      { String? uid}) async {
     await FirebaseFirestore.instance.collection("Users").doc(uid).set({
         "userName": username,
         'email': email,
         "phoneNumber": phone,
     });
   }
+
+  GlobalKey _globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
