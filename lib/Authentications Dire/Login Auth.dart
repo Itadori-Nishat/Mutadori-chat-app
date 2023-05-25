@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPageAuth extends StatefulWidget {
-  const LoginPageAuth({Key? key}) : super(key: key);
+  final Function() onTap;
+  const LoginPageAuth({Key? key,required this.onTap}) : super(key: key);
 
   @override
   State<LoginPageAuth> createState() => _LoginPageAuthState();
@@ -15,14 +16,33 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
   TextEditingController _passwordController = TextEditingController();
 
   Future signIn() async{
+    showDialog(context: context, builder: (BuildContext context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+    );
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
     } on FirebaseAuthException catch(e) {
-      print(e);
+      if(e.code == "user-not-found"){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.teal,
+            content: Text("Email not found"),    duration: Duration(seconds: 2),  ),);
+      } else if(e.code == "wrong-password"){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.teal,
+            content: Text("Password doesn't match"),    duration: Duration(seconds: 2),  ),);
+      }
     }
+    Navigator.pop(context);
   }
+
 
   final _formKey = GlobalKey<FormState>();
 
@@ -38,11 +58,11 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height*0.2,),
-                //appname
+
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: Text("App Name",style: GoogleFonts.pacifico(textStyle: TextStyle(
+                  child: Text("App Name",style: GoogleFonts.pacifico(textStyle: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
                   )),),
@@ -64,16 +84,16 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                           keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 10),
-                              hintText: "phone, email  or username",
+                                contentPadding: const EdgeInsets.only(left: 10),
+                              hintText: "Enter your email",
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.grey
                                 )
                               ),
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent
                                 ),
                                 borderRadius: BorderRadius.circular(5)
@@ -92,16 +112,16 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                           },
                           controller: _passwordController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 10),
+                              contentPadding: const EdgeInsets.only(left: 10),
                               hintText: "password",
                               focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Colors.grey
                                   )
                               ),
                               border: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Colors.transparent
                                   ),
                                   borderRadius: BorderRadius.circular(5)
@@ -118,8 +138,8 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                   children: [
                     GestureDetector(
                       onTap: (){},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 6.0),
                         child: Text("Forgot password?"),
                       ),
                     )
@@ -140,8 +160,8 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.teal
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: Text("Login",style: TextStyle(
                             fontSize: 18,
@@ -152,16 +172,14 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30.0),
                   child: Divider(thickness: 2,),
                 ),
                 //create account
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPageAuth()));
-                  },
-                  child: Center(
+                  onTap: widget.onTap,
+                  child: const Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

@@ -2,6 +2,7 @@ import 'package:chat_x_firebase/Faul/Image%20file.dart';
 import 'package:chat_x_firebase/Faul/post%20decoration.dart';
 import 'package:chat_x_firebase/UI/ArchivePage.dart';
 import 'package:chat_x_firebase/UI/SettingPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Faul/Image picker file.dart';
@@ -138,18 +139,23 @@ class BottotmSheetContainer extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(Icons.logout,color: Colors.red,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text("Log out",style: TextStyle(
-                      color: Colors.red
-                    ),),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () async{
+                await FirebaseAuth.instance.signOut();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.logout,color: Colors.red,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("Log out",style: TextStyle(
+                        color: Colors.red
+                      ),),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

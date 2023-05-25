@@ -26,7 +26,9 @@ class SettingsPage extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('Loading...');
+            return Center(child: Text('Loading...',style: TextStyle(
+              fontSize: 20
+            ),));
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {
@@ -42,7 +44,7 @@ class SettingsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "(app name) uses this information to verify your indetity and  to "
+                      "(app name) uses this information to verify your identity and  to "
                       "keep our community safe. You decide what "
                       "personal details you make visible to others",
                       style: TextStyle(fontSize: 17),
@@ -114,7 +116,26 @@ class SettingsPage extends StatelessWidget {
                                   )
                                 ],
                               ),
-                            )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Account created on: ",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    user.metadata.creationTime.toString(),
+                                    style: TextStyle(fontSize: 15),
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
