@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:chat_x_firebase/Authentications%20Dire/Login%20Auth.dart';
+import 'package:chat_x_firebase/Authentications%20Dire/Login%20or%20Register%20page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(brightness: Brightness.light),
+      theme: ThemeData(
+          primarySwatch: Colors.teal,
+          brightness: Brightness.light),
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       home: SplashScreen(),
@@ -68,7 +71,7 @@ class MainHomePage extends StatelessWidget {
           if(snapshot.hasData){
             return HomePageUi();
           } else {
-            return LoginPageAuth();
+            return LoginOrRegister();
           }
         }
         ,),
