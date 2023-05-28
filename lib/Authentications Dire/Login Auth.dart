@@ -31,13 +31,13 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
       if(e.code == "user-not-found"){
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.teal,
-            content: Text("Email not found"),    duration: Duration(seconds: 2),  ),);
+            backgroundColor: Colors.red,
+            content: Text("Email not found",style: TextStyle(fontSize: 18),),    duration: Duration(seconds: 2),  ),);
       } else if(e.code == "wrong-password"){
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.teal,
-            content: Text("Password doesn't match"),    duration: Duration(seconds: 2),  ),);
+            backgroundColor: Colors.red,
+            content: Text("Password doesn't match",style: TextStyle(fontSize: 18)),    duration: Duration(seconds: 2),  ),);
       }
     }
     Navigator.pop(context);

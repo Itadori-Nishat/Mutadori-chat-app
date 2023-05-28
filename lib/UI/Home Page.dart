@@ -1,3 +1,4 @@
+import 'package:chat_x_firebase/UI/Drawer%20ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class HomePageUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         actions: [
           IconButton(onPressed: (){
           showModalBottomSheet(context: context,
@@ -28,27 +28,27 @@ class HomePageUi extends StatelessWidget {
         title: Text("Home Page"),
         centerTitle: true,
       ),
-
+      drawer: DrawerPageUi(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              StreamBuilder(
-                stream: usersCollection.doc(user.uid).snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  final userdata = snapshot.data;
-                  final name = userdata?.get("userName");
-                  final phone = userdata?.get("phoneNumber");
-                  return Center(
-                    child: Column(
-                      children: [
-                        Text(name),
-                        Text(phone.toString())
-                      ],
-                    ),
-                  );
-                },),
+              // StreamBuilder(
+              //   stream: usersCollection.doc(user.uid).snapshots(),
+              //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              //     final userdata = snapshot.data;
+              //     final name = userdata?.get("userName");
+              //     final phone = userdata?.get("phoneNumber");
+              //     return Center(
+              //       child: Column(
+              //         children: [
+              //           Text(name),
+              //           Text(phone.toString())
+              //         ],
+              //       ),
+              //     );
+              //   },),
               TextButton(onPressed: (){
                 showDialog(context: (context), builder: (BuildContext context) {
                   return AlertDialog(
