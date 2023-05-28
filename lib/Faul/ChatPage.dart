@@ -14,7 +14,6 @@ class _ChatMessagePageUIState extends State<ChatMessagePageUI> {
   TextEditingController textController = TextEditingController();
   bool isMe = false;
   List _messages = [];
-  var _time = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -27,10 +26,14 @@ class _ChatMessagePageUIState extends State<ChatMessagePageUI> {
         children: [
           Expanded(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("chats").snapshots(),
+              stream: FirebaseFirestore.instance.collection("chats").orderBy('createdAt', descending: true).snapshots(),
               builder: (context, snapshot) {
+                if(!snapshot.hasData){
+
+                  return Center(child: CircularProgressIndicator());
+                }
                 if(!snapshot.hasData) {
-                  return Text("error${snapshot.error}");
+                  return Text("error");
                 }
 
                 final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
@@ -56,6 +59,7 @@ class _ChatMessagePageUIState extends State<ChatMessagePageUI> {
                                   padding: const EdgeInsets.all(12),
                                   child: Column(
                                     children: [
+                                      Text(documents[index]["time"].toString(),),
                                       Text(
                                         documents[index]["text"],
                                         textAlign: TextAlign.justify,
@@ -79,6 +83,8 @@ class _ChatMessagePageUIState extends State<ChatMessagePageUI> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    maxLines: 6,
+                    minLines: 1,
                     textCapitalization: TextCapitalization.sentences,
                     controller: textController,
                     style: TextStyle(fontSize: 18),
@@ -104,7 +110,8 @@ class _ChatMessagePageUIState extends State<ChatMessagePageUI> {
                           _messages.add(_newMessages);
                           FirebaseFirestore.instance.collection("chats").add({
                             "text": _newMessages,
-                            "time": _time,
+                            "time": '${DateTime.now().hour}:${DateTime.now().minute}  ${DateTime.now().hour >11 ? "pm":"am"}',
+                          'createdAt': FieldValue.serverTimestamp(),
                           });
                           textController.clear();
                         });
