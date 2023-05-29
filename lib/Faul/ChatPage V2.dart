@@ -133,10 +133,6 @@ class Messages extends StatelessWidget {
           .where('userIDs', isEqualTo: userIDsConcat)
           .orderBy('createdAt', descending: true)
           .snapshots(),
-/*      stream: FirebaseFirestore.instance
-          .collection('chats')
-          .orderBy('createdAt', descending: true)
-          .snapshots(),*/
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
 
         if(snapshot.hasError){
