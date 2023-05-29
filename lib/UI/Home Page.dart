@@ -1,7 +1,10 @@
+import 'package:chat_x_firebase/Faul/InboxPage.dart';
 import 'package:chat_x_firebase/UI/Drawer%20ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'BottomSheetUI.dart';
 
@@ -29,53 +32,49 @@ class HomePageUi extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: DrawerPageUi(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // StreamBuilder(
-              //   stream: usersCollection.doc(user.uid).snapshots(),
-              //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              //     final userdata = snapshot.data;
-              //     final name = userdata?.get("userName");
-              //     final phone = userdata?.get("phoneNumber");
-              //     return Center(
-              //       child: Column(
-              //         children: [
-              //           Text(name),
-              //           Text(phone.toString())
-              //         ],
-              //       ),
-              //     );
-              //   },),
-              TextButton(onPressed: (){
-                showDialog(context: (context), builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Do you want to log out?",),
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
+      body: SafeArea(
+        child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("Users").snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if(!snapshot.hasData) {
+                return Center(child: Text("nothing"));
+              }
+              List<DocumentSnapshot> documents = snapshot.data!.docs;
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: documents.length,
+                      itemBuilder: ( context, index) {
+                        Map<String, dynamic> data = documents[index].data() as Map<String, dynamic>;
+                        String? name = data['userName'];
+                        String? email = data['email'];
+                        return GestureDetector(
                           onTap: (){
-                            Navigator.pop(context);
+                            Get.snackbar(
+                                "Clicked on", "${email}",
+                                duration: Duration(seconds: 2),
+                                dismissDirection: DismissDirection.endToStart);
                           },
-                            child: Text("NO",)),
-                        GestureDetector(
-                            onTap: (){
-                              FirebaseAuth.instance.signOut();
-                              Navigator.pop(context);
+                          child: GestureDetector(
+                            onTap:  () {
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) =>
+                                  ChatPage(chatUsername: '${name}')));
                             },
-                            child: Text("Yes",)),
-                      ],
+                            child: ListTile(
+                              title: Text("Name: $name"),
+                              subtitle: Text("Phone: $email"),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-                );
-              },
-                  child: Text("Log out"))
-            ],
-          ),
+                  ),
+                ],
+              );
+            }
+
         ),
       ),
     );
