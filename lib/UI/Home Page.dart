@@ -1,3 +1,4 @@
+import 'package:chat_x_firebase/Faul/ChatPage%20V2.dart';
 import 'package:chat_x_firebase/Faul/InboxPage.dart';
 import 'package:chat_x_firebase/UI/Drawer%20ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,23 +50,16 @@ class HomePageUi extends StatelessWidget {
                         Map<String, dynamic> data = documents[index].data() as Map<String, dynamic>;
                         String? name = data['userName'];
                         String? email = data['email'];
+                        String? uid = documents[index].id;
                         return GestureDetector(
-                          onTap: (){
-                            Get.snackbar(
-                                "Clicked on", "${email}",
-                                duration: Duration(seconds: 2),
-                                dismissDirection: DismissDirection.endToStart);
+                          onTap:  () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) =>
+                                MessengerPage(name: name.toString(),uid: uid)));
                           },
-                          child: GestureDetector(
-                            onTap:  () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) =>
-                                  ChatPage(chatUsername: '${name}')));
-                            },
-                            child: ListTile(
-                              title: Text("Name: $name"),
-                              subtitle: Text("Phone: $email"),
-                            ),
+                          child: ListTile(
+                            title: Text("Name: $name"),
+                            subtitle: Text("Phone: $email, $uid"),
                           ),
                         );
                       },

@@ -32,7 +32,7 @@ class DrawerPageUi extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text('Chat'),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MessengerPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MessengerPage(name: '', uid: '',)));
             },
           ),
           ListTile(
