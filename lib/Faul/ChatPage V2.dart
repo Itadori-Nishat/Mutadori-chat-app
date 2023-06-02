@@ -64,6 +64,21 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
       child: Row(
         children: [
+          GestureDetector(
+            onTap: (){
+              print("tapped");
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  shape: BoxShape.circle
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.camera_alt_outlined),
+              ),
+            ),
+          ),
           Expanded(
             child: TextFormField(
               maxLines: 6,
@@ -72,21 +87,7 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
               controller: textController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: (){
-                      print("tapped");
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          shape: BoxShape.circle
-                      ),
-                      child: Icon(Icons.camera_alt_outlined),
-                    ),
-                  ),
-                ),
+
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 12, horizontal: 15),
                   hintText: "Message...",
@@ -274,12 +275,12 @@ class _BubbleMessageState extends State<BubbleMessage> {
                     ],
                   ),
                 )),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 5.0),
-            //   child: Text('$time',style: TextStyle(
-            //       fontSize: 13
-            //   ),),
-            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text('${widget.time}',style: TextStyle(
+                  fontSize: 12
+              ),),
+            ),
           ],
         ),
       ),
