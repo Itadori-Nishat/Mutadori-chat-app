@@ -62,7 +62,7 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: Text("App Name",style: GoogleFonts.pacifico(textStyle: const TextStyle(
+                  child: Text("Mutadori",style: GoogleFonts.pacifico(textStyle: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
                   )),),

@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import 'UI/Home Page.dart';
 
@@ -44,7 +43,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: AnimatedSplashScreen(
           duration: 1000,
-          splash: Text("App Name",style: GoogleFonts.pacifico(textStyle: TextStyle(
+          splash: Text("Mutadori".toUpperCase(),style: GoogleFonts.pacifico(textStyle: TextStyle(
               fontSize: 35 ,
               color: Colors.teal,
               fontWeight: FontWeight.bold

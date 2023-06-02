@@ -1,7 +1,6 @@
 import 'package:chat_x_firebase/Faul/ChatPage%20V2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../Faul/ChatPage.dart';
 import 'SettingPage.dart';
 
 class DrawerPageUi extends StatelessWidget {
@@ -25,14 +24,7 @@ class DrawerPageUi extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePageUI()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Chat'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MessengerPage(name: '', uid: '',)));
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePageUI()));
             },
           ),
           ListTile(

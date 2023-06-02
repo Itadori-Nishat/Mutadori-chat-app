@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "122819648019",
-    "project_id": "chatxfirebase-996f3",
-    "storage_bucket": "chatxfirebase-996f3.appspot.com"
+    "project_number": "78571626213",
+    "project_id": "messenger-app-bd9ca",
+    "storage_bucket": "messenger-app-bd9ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:122819648019:android:4b26f30798ebb3f0c17de6",
+        "mobilesdk_app_id": "1:78571626213:android:6d7dc34faa3808faa73e0c",
         "android_client_info": {
           "package_name": "com.example.chat_x_firebase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "122819648019-tlrjgnljg7od8d0o0b7ursjcvve87l7o.apps.googleusercontent.com",
+          "client_id": "78571626213-4gqcgf91uhver7g6gkg2dkip9btcjdtj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAipqbRrdAqbA6aKVTlg7XqCEuB5JSqzrk"
+          "current_key": "AIzaSyCJJ4UFtiI5SUMwJIjx4hF_WGsXqpkvdsE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "122819648019-tlrjgnljg7od8d0o0b7ursjcvve87l7o.apps.googleusercontent.com",
+              "client_id": "78571626213-4gqcgf91uhver7g6gkg2dkip9btcjdtj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

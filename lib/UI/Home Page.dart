@@ -14,6 +14,10 @@ class HomePageUi extends StatelessWidget {
 
   final user = FirebaseAuth.instance.currentUser!;
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Users');
+
+  Future  _refresh() async{
+    return Future.delayed(Duration(seconds: 1));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,17 +33,21 @@ class HomePageUi extends StatelessWidget {
               );
         },
             icon: Icon(Icons.more_vert))],
-        title: Text("Home Page"),
+        title: Text("${user.email.toString()}"),
         centerTitle: true,
       ),
-      drawer: DrawerPageUi(),
+      drawer: const DrawerPageUi(),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("Users").snapshots(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if(!snapshot.hasData) {
-                return Center(child: Text("nothing"));
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(child: CircularProgressIndicator(),);
               }
+              if(!snapshot.hasData) {
+                return Center(child: Text("Loading..."));
+              }
+
               List<DocumentSnapshot> documents = snapshot.data!.docs;
               return Column(
                 children: [
@@ -59,7 +67,7 @@ class HomePageUi extends StatelessWidget {
                           },
                           child: ListTile(
                             title: Text("Name: $name"),
-                            subtitle: Text("Phone: $email, $uid"),
+                            subtitle: Text("Email: $email"),
                           ),
                         );
                       },
