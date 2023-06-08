@@ -1,4 +1,5 @@
 import 'package:chat_x_firebase/Faul/Image%20file.dart';
+import 'package:chat_x_firebase/Faul/chat%20gpt%20insta%20ui.dart';
 import 'package:chat_x_firebase/Faul/post%20decoration.dart';
 import 'package:chat_x_firebase/UI/ArchivePage.dart';
 import 'package:chat_x_firebase/UI/SettingPage.dart';
@@ -90,7 +91,7 @@ class BottotmSheetContainer extends StatelessWidget {
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FireStoreCollection()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Page1()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -99,7 +100,7 @@ class BottotmSheetContainer extends StatelessWidget {
                     Icon(Icons.local_fire_department),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text("FireStore Collection"),
+                      child: Text("Page 1"),
                     ),
                   ],
                 ),

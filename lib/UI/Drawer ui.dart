@@ -1,4 +1,4 @@
-import 'package:chat_x_firebase/Faul/ChatPage%20V2.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'SettingPage.dart';

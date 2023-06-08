@@ -1,13 +1,9 @@
-import 'package:chat_x_firebase/Faul/ChatPage%20V2.dart';
-import 'package:chat_x_firebase/Faul/InboxPage.dart';
 import 'package:chat_x_firebase/UI/Drawer%20ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import 'BottomSheetUI.dart';
+import 'ChatPageUIdesign.dart';
 
 class HomePageUi extends StatelessWidget {
   HomePageUi({Key? key}) : super(key: key);
