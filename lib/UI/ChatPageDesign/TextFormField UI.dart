@@ -19,7 +19,8 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
 
   bool isMe = false;
 
-  List _messages = [];
+  final List _messages = [];
+
   Future SendMessage() async {
     String newMessages = textController.text;
     if (newMessages.isEmpty) {
@@ -45,8 +46,7 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
 
         FirebaseFirestore.instance.collection("chats").add({
           "text": newMessages,
-          "time":
-          '${DateTime.now().hour}:${DateTime.now().minute}  ${DateTime.now().hour > 11 ? "pm" : "am"}',
+          "time": '${DateTime.now().hour}:${DateTime.now().minute}  ${DateTime.now().hour > 11 ? "pm" : "am"}',
           'createdAt': DateTime.now(),
           'senderID': userId,
           'senderNAME': userName,
