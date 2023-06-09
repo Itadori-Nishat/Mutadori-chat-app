@@ -42,7 +42,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: AnimatedSplashScreen(
           duration: 1000,
-          splash: Text("Mutadori",style: GoogleFonts.pacifico(textStyle: const TextStyle(
+          splash: Text("mutsatori",style: GoogleFonts.pacifico(textStyle: const TextStyle(
               fontSize: 35 ,
               color: Colors.teal,
               fontWeight: FontWeight.bold

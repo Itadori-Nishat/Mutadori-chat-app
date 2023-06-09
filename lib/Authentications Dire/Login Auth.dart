@@ -1,3 +1,4 @@
+import 'package:chat_x_firebase/Authentications%20Dire/Forgot%20Password.dart';
 import 'package:chat_x_firebase/Authentications%20Dire/Registration%20Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: Text("Mutadori",style: GoogleFonts.pacifico(textStyle: const TextStyle(
+                  child: Text("mutsatori",style: GoogleFonts.pacifico(textStyle: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
                   )),),
@@ -137,7 +138,9 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+                      },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 6.0),
                         child: Text("Forgot password?"),
@@ -184,7 +187,8 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't have account?"),
-                        Text(" Create new account",style: TextStyle(
+                        SizedBox(width: 5,),
+                        Text("Create new account?",style: TextStyle(
                           color: Colors.teal,
                           fontSize: 16
                         ),)

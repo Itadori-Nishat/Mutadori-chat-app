@@ -107,13 +107,6 @@ class _BubbleMessageState extends State<BubbleMessage> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 5.0),
-            //   child: Text(
-            //     '${widget.time}',
-            //     style: const TextStyle(fontSize: 12),
-            //   ),
-            // ),
           ],
 
         ),

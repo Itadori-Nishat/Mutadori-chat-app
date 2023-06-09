@@ -19,6 +19,11 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
   TextEditingController _confirmPassword = TextEditingController();
 
   Future signUp() async {
+    showDialog(context: context, builder: (BuildContext context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    });
     try {
       final userCred = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -65,7 +70,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "App Name",
+          "mutsatori",
           style: GoogleFonts.pacifico(
               textStyle: TextStyle(fontWeight: FontWeight.bold)),
         ),
@@ -112,6 +117,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if(val == null || val!.isEmpty) {
                               return"Enter your email";
