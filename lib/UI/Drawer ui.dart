@@ -1,7 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'SettingPage.dart';
+import 'Profile Info.dart';
 
 class DrawerPageUi extends StatelessWidget {
   const DrawerPageUi({Key? key}) : super(key: key);

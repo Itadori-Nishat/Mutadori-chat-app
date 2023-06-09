@@ -1,9 +1,9 @@
+import 'package:chat_x_firebase/UI/ChatPageDesign/ChatPageUIdesign.dart';
 import 'package:chat_x_firebase/UI/Drawer%20ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'BottomSheetUI.dart';
-import 'ChatPageUIdesign.dart';
 
 class HomePageUi extends StatelessWidget {
   HomePageUi({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class HomePageUi extends StatelessWidget {
                           onTap:  () {
                             Navigator.push(
                                 context, MaterialPageRoute(builder: (context) =>
-                                MessengerPage(name: name.toString(),uid: uid)));
+                                MessengerPage(name: name.toString(), uid: uid.toString())));
                           },
                           child: ListTile(
                             title: Text("Name: $name"),
