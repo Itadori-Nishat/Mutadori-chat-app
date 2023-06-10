@@ -30,6 +30,7 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
           password: _passwordController.text.trim());
     } on FirebaseAuthException catch(e) {
       if(e.code == "user-not-found"){
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.red,
