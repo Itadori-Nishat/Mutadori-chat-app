@@ -1,6 +1,7 @@
-import 'package:chat_x_firebase/Authentications%20Dire/Login%20Auth.dart';
-import 'package:chat_x_firebase/Authentications%20Dire/Registration%20Auth.dart';
 import 'package:flutter/material.dart';
+
+import 'Login Auth.dart';
+import 'Registration Auth.dart';
 
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({Key? key}) : super(key: key);

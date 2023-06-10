@@ -1,8 +1,8 @@
-import 'package:chat_x_firebase/Authentications%20Dire/Forgot%20Password.dart';
-import 'package:chat_x_firebase/Authentications%20Dire/Registration%20Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'Forgot Password.dart';
 
 class LoginPageAuth extends StatefulWidget {
   final Function() onTap;

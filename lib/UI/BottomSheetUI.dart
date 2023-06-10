@@ -1,14 +1,13 @@
-import 'package:chat_x_firebase/Faul/Image%20file.dart';
-import 'package:chat_x_firebase/Faul/chat%20gpt%20insta%20ui.dart';
-import 'package:chat_x_firebase/Faul/post%20decoration.dart';
-import 'package:chat_x_firebase/UI/ArchivePage.dart';
-import 'package:chat_x_firebase/UI/Profile Info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Faul/Hide.dart';
+import '../Faul/Image file.dart';
 import '../Faul/Image picker file.dart';
-import '../Faul/firestore collection.dart';
+import '../Faul/chat gpt insta ui.dart';
+import '../Faul/post decoration.dart';
+import 'ArchivePage.dart';
+import 'Profile Info.dart';
 
 class BottotmSheetContainer extends StatelessWidget {
   const BottotmSheetContainer({Key? key}) : super(key: key);
