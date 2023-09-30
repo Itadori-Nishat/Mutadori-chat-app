@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,34 +21,42 @@ class _SettingsPageState extends State<SettingsPage> {
       FirebaseFirestore.instance.collection('Users');
 
 
-  File? selectedPhoto;
-  void _uploadPhoto() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom, allowedExtensions: ['jpg', 'jpeg', 'png']);
-    debugPrint("filepicker result: $result");
-    if (result != null) {
-      debugPrint("result not null");
-      File file = File(result.files.single.path!);
-      setState(() {
-        selectedPhoto = file;
-      });
-    }
+  PlatformFile? _pickedImage;
+
+  Future selectFile() async{
+    final result = await FilePicker.platform.pickFiles();
+    if(result == null) return;
+
+    setState(() {
+      _pickedImage = result.files.first;
+    });
   }
 
-  elseImage() {
-    if(selectedPhoto == null) {
-      return CircleAvatar(
-        backgroundColor: Colors.green,
-      );
-    } else {
-      return selectedPhoto!;
-    }
+  Future UploadImage() async{
+
+    final path = 'files/${_pickedImage!.name}';
+    final file = File(_pickedImage!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+
+    String getImge = await ref.getDownloadURL();
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            UploadImage();
+            Navigator.pop(context);
+          },
+              icon: Icon(Icons.check))
+        ],
         title: Text(
           "Profile",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -73,7 +82,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
           final userData = snapshot.data;
           final username = userData?.get("userName");
-          final phone = userData?.get("phoneNumber"); // Extract the user data from the snapshot
+          final phone = userData?.get("phoneNumber");
+
           return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -82,20 +92,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     Center(
                       child: Column(
                         children: [
-                          if(selectedPhoto !=null)
-                          Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.shade200
+                          if(_pickedImage != null)
+                            Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.teal.shade50,
+                                  shape: BoxShape.circle
+                              ),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.file(File(_pickedImage!.path!), fit: BoxFit.contain,)),
                             ),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.file(elseImage()!, fit: BoxFit.cover,)),
-                          ),
 
-                          TextButton(onPressed: _uploadPhoto,
+
+                          TextButton(onPressed: selectFile,
                               child: Text("Edit Photo"))
                         ],
                       ),
@@ -141,7 +152,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-
                                   Text(
                                     user.email.toString(),
                                     style: TextStyle(fontSize: 16),

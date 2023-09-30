@@ -1,6 +1,6 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Faul/MainHomePage.dart';
 import 'Profile Info.dart';
 
 class DrawerPageUi extends StatelessWidget {
@@ -24,7 +24,7 @@ class DrawerPageUi extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePageUI()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginHomePage()));
             },
           ),
           ListTile(

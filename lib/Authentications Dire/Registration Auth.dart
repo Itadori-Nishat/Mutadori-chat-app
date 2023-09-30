@@ -141,6 +141,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           validator: (val) {
                             if(val == null || val!.isEmpty) {
                               return "Enter your phone number";

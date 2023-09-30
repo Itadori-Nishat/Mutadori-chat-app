@@ -54,7 +54,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Center(child: Image.asset("Assets/forgotpass.png",width: 100,)),
+                child: Center(child: Image.asset("Assets/resetIcon.png",width: 100,scale: 10,)),
               ),
               Text("Enter the email you've used to sign up. We'll send a link to the address",
               style: TextStyle(

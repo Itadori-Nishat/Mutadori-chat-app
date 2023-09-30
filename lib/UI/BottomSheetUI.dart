@@ -1,9 +1,11 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Faul/Hide.dart';
 import '../Faul/Image file.dart';
 import '../Faul/Image picker file.dart';
+import '../Faul/ProfileImage.dart';
 import '../Faul/chat gpt insta ui.dart';
 import '../Faul/post decoration.dart';
 import 'ArchivePage.dart';
@@ -21,6 +23,23 @@ class BottotmSheetContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UserImagePickers()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.settings),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("Profile"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             GestureDetector(
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
