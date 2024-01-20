@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "729433759215",
-    "project_id": "nishat-chat-app-44dfe",
-    "storage_bucket": "nishat-chat-app-44dfe.appspot.com"
+    "project_number": "576730953926",
+    "project_id": "chat-app-3-1-24",
+    "storage_bucket": "chat-app-3-1-24.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:729433759215:android:be353324a20544e516aa1a",
+        "mobilesdk_app_id": "1:576730953926:android:f18078c77813298b5bbfc7",
         "android_client_info": {
           "package_name": "com.example.chat_x_firebase"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "729433759215-6bj6ddbc67ket6h2ki9kvp08h4fk2ge8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDu8YB4sOecE6lRPn13NRCpzzhRktROunE"
+          "current_key": "AIzaSyBlBa9vHh8iVj3jQke25znJbZWkEEz3U_U"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "729433759215-6bj6ddbc67ket6h2ki9kvp08h4fk2ge8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -4,14 +4,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'Authentications Dire/Login or Register page.dart';
+import 'Controller/dependency_injection.dart';
+import 'Services/Flutter notification.dart';
 import 'UI/Home Page.dart';
 
-void main() async{
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseApi().initNotifactions();
   runApp(const MyApp());
+  DependencyInjection.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +48,7 @@ class SplashScreen extends StatelessWidget {
               color: Colors.teal,
               fontWeight: FontWeight.bold
           )),),
-          animationDuration: const Duration(milliseconds: 1500),
+          animationDuration: const Duration(seconds: 1),
           splashTransition: SplashTransition.fadeTransition,
           nextScreen: const MainHomePage()),
     );

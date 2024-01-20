@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Faul/Search user from firebase.dart';
 import 'BottomSheetUI.dart';
-import 'ChatPageDesign/ChatPageUIdesign.dart';
+import 'ChatPageDesign/MessengerPage.dart';
 import 'Drawer ui.dart';
 
 class HomePageUi extends StatelessWidget {
-  HomePageUi({Key? key}) : super(key: key);
 
-  final user = FirebaseAuth.instance.currentUser!;
+  HomePageUi({Key? key,}) : super(key: key);
+
+  final currentUser = FirebaseAuth.instance.currentUser!;
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Users');
+  int userList = 1;
 
-  Future  _refresh() async{
-    return Future.delayed(Duration(seconds: 1));
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,13 +29,19 @@ class HomePageUi extends StatelessWidget {
               );
         },
             icon: Icon(Icons.more_vert))],
-        title: Text("${user.email.toString()}"),
+        title: Text("${currentUser.email.toString()}"),
         centerTitle: true,
       ),
       drawer: const DrawerPageUi(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => UserSearch()));
+        },
+        child: Icon(Icons.search),
+      ),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("Users").snapshots(),
+            stream: usersCollection.snapshots(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting){
                 return Center(child: CircularProgressIndicator(),);
@@ -43,8 +49,10 @@ class HomePageUi extends StatelessWidget {
               if(!snapshot.hasData) {
                 return Center(child: Text("Loading..."));
               }
-
               List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+              ///Remove currrent user from list..
+              documents.removeWhere((doc) => doc.id == currentUser.uid);
               return Column(
                 children: [
                   Expanded(
@@ -62,7 +70,7 @@ class HomePageUi extends StatelessWidget {
                                 MessengerPage(name: name.toString(), uid: uid.toString())));
                           },
                           child: ListTile(
-                            title: Text("Name: $name"),
+                            title: Text("${userList ++}. ${name}" ),
                             subtitle: Text("Email: $email"),
                           ),
                         );

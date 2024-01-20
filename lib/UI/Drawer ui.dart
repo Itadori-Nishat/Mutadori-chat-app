@@ -1,6 +1,13 @@
+import 'package:Instely/Faul/Allusr%20except%20current%20user.dart';
+import 'package:Instely/Faul/Search%20user%20from%20firebase.dart';
+import 'package:Instely/Faul/Typing%20show.dart';
+import 'package:Instely/Images%20services/image%20firebase%20to%20app.dart';
+import 'package:Instely/Images%20services/image%20to%20firebase%20and%20show.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Faul/MainHomePage.dart';
+import '../Faul/Profile Picture update ans show.dart';
+import '../Faul/fghdfghdgh.dart';
 import 'Profile Info.dart';
 
 class DrawerPageUi extends StatelessWidget {
@@ -25,6 +32,39 @@ class DrawerPageUi extends StatelessWidget {
             title: Text('Home'),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginHomePage()));
+            },
+          ),ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Profile page'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('type'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => UserListScreen()));
+            },
+          ),ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Search user'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => UserSearch()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('image upload'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ImgeFirebase()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('fireabase to app'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FirebaseToImage()));
             },
           ),
           ListTile(

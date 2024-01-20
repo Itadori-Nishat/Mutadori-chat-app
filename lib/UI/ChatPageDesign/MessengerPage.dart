@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'Message Decoration.dart';
+import 'ChatInboxUI.dart';
 import 'TextFormField UI.dart';
 
 class MessengerPage extends StatefulWidget {
@@ -54,6 +54,8 @@ class _MessengerPageState extends State<MessengerPage> {
         child: Column(
           children: [
             Expanded(child: Messages(uid: widget.uid)),
+
+            ///TextFormField
             TextFieldDecorationPage(
               uid: widget.uid,
             )
@@ -107,10 +109,11 @@ class Messages extends StatelessWidget {
           reverse: true,
           itemCount: documents.length,
           itemBuilder: (BuildContext context, int index) {
-            return BubbleMessage(
+            return ChatInboxUI(
               name: documents[index]['senderNAME'],
               text: documents[index]['text'],
               time: documents[index]['time'],
+              image: documents[index]['images'],
               isMe: (FirebaseAuth.instance.currentUser?.uid ==
                   documents[index]['senderID']),
             );

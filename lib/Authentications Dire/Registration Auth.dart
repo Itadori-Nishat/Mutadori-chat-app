@@ -47,7 +47,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.teal,
-            content: Text("The account already exists for that email"),    duration: Duration(seconds: 2), ),);
+            content: Text("The account already exists for that email"),duration: Duration(seconds: 2), ),);
       }
     }
   }
@@ -60,7 +60,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
         "phoneNumber": phone,
     });
   }
-
+  bool _obscureText = true;
   final _globalKey = GlobalKey<FormState>();
 
 
@@ -165,6 +165,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextFormField(
+                          obscureText: _obscureText,
                           validator: (val) {
                             if(val == null || val!.isEmpty){
                               return "Enter password";
@@ -174,6 +175,16 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                           },
                           controller: _passwordController,
                           decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
                               contentPadding: EdgeInsets.only(left: 10),
                               hintText: "Password",
                               focusedBorder: OutlineInputBorder(
@@ -188,6 +199,7 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextFormField(
+                          obscureText: _obscureText,
                           validator: (val) {
                             if(val == null || val!.isEmpty){
                               return "Confirm your password";
@@ -197,6 +209,16 @@ class _RegistrationPageAuthState extends State<RegistrationPageAuth> {
                           },
                           controller: _confirmPassword,
                           decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
                               contentPadding: EdgeInsets.only(left: 10),
                               hintText: "Confirm Password",
                               focusedBorder: OutlineInputBorder(

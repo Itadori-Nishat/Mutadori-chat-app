@@ -1,27 +1,58 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-class BubbleMessage extends StatefulWidget {
+class ChatInboxUI extends StatefulWidget {
   String text;
   String name;
   String time;
   bool isMe;
-  BubbleMessage(
+  String image;
+  ChatInboxUI(
       {Key? key,
         required this.text,
         required this.time,
         required this.name,
-        required this.isMe})
+        required this.isMe,
+        required this.image
+
+      })
       : super(key: key);
 
   @override
-  State<BubbleMessage> createState() => _BubbleMessageState();
+  State<ChatInboxUI> createState() => _ChatInboxUIState();
 }
 
-class _BubbleMessageState extends State<BubbleMessage> {
+class _ChatInboxUIState extends State<ChatInboxUI> {
 
-  bool _showinfo = false;
+  bool _showTime = false;
+
+  late String? imageURL; // Holds the downloaded image URL
+
+  @override
+  void initState() {
+    super.initState();
+    loadImageFromFirebase(); // Load the image URL when the widget initializes
+  }
+
+  Future<void> loadImageFromFirebase() async {
+    try {
+      Reference ref = FirebaseStorage.instance.ref().child('images').child('image.jpg');
+      imageURL = await ref.getDownloadURL();
+      setState(() {}); // Trigger a rebuild after fetching the image URL
+    } catch (e) {
+      print('Error fetching image: $e');
+    }
+  }
+  void removeText() {
+    setState(() {
+      widget.text = ''; // Update the text to be an empty string
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +60,7 @@ class _BubbleMessageState extends State<BubbleMessage> {
     return Align(
       alignment: widget.isMe ? Alignment.topRight : Alignment.topLeft,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 1),
         child: Column(
           mainAxisAlignment:
           widget.isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
@@ -39,7 +70,7 @@ class _BubbleMessageState extends State<BubbleMessage> {
             GestureDetector(
               onTap: (){
                 setState(() {
-                  _showinfo = !_showinfo;
+                  _showTime = !_showTime;
                 });
               },
               child: Column(
@@ -71,31 +102,29 @@ class _BubbleMessageState extends State<BubbleMessage> {
                           children: [
                             GestureDetector(
                               onLongPress: (){
-                                Get.snackbar(
-                                    "Text Copied",
-                                    "${widget.text.toString()}",
-                                    duration: const Duration(milliseconds: 800),
-                                    messageText: Container(
-                                      constraints: const BoxConstraints(
-                                          maxHeight: 150
-                                      ),
-                                      child: Text("${widget.text.toString()}"),
-                                    )
-                                );
-                                Clipboard.setData(ClipboardData(text: widget.text.toString()));
+                                removeText();
+                                // Clipboard.setData(ClipboardData(text: widget.text.toString()));
                               },
-                              child: Text(
-                                '${widget.text}',
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: widget.isMe ? Colors.white : Colors.black),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage(widget.image),
+                                  ),
+                                  Text(
+                                    '${widget.text}',
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: widget.isMe ? Colors.white : Colors.black),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       )),
-                  if(_showinfo)(
+
+                  if(_showTime)(
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(

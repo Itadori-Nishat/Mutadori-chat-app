@@ -20,20 +20,18 @@ class _SettingsPageState extends State<SettingsPage> {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('Users');
 
-
   PlatformFile? _pickedImage;
 
-  Future selectFile() async{
+  Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
-    if(result == null) return;
+    if (result == null) return;
 
     setState(() {
       _pickedImage = result.files.first;
     });
   }
 
-  Future UploadImage() async{
-
+  Future UploadImage() async {
     final path = 'files/${_pickedImage!.name}';
     final file = File(_pickedImage!.path!);
 
@@ -41,20 +39,18 @@ class _SettingsPageState extends State<SettingsPage> {
     ref.putFile(file);
 
     String getImge = await ref.getDownloadURL();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: (){
-            UploadImage();
-            Navigator.pop(context);
-          },
+          IconButton(
+              onPressed: () {
+                UploadImage();
+                Navigator.pop(context);
+              },
               icon: Icon(Icons.check))
         ],
         title: Text(
@@ -71,9 +67,11 @@ class _SettingsPageState extends State<SettingsPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Text('Loading...',style: TextStyle(
-              fontSize: 20
-            ),));
+            return Center(
+                child: Text(
+              'Loading...',
+              style: TextStyle(fontSize: 20),
+            ));
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {
@@ -92,22 +90,28 @@ class _SettingsPageState extends State<SettingsPage> {
                     Center(
                       child: Column(
                         children: [
-                          if(_pickedImage != null)
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  color: Colors.teal.shade50,
-                                  shape: BoxShape.circle
-                              ),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.file(File(_pickedImage!.path!), fit: BoxFit.contain,)),
-                            ),
-
-
-                          TextButton(onPressed: selectFile,
-                              child: Text("Edit Photo"))
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.teal.shade50,
+                                shape: BoxShape.circle),
+                            child: _pickedImage != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.file(File(_pickedImage!.path!),
+                                        fit: BoxFit.cover),
+                                  )
+                                : ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                                  child: Image.asset(
+                                      'Assets/profile.png', // Replace with the path to your placeholder image asset
+                                      fit: BoxFit.cover,
+                                    ),
+                                ),
+                          ),
+                          TextButton(
+                              onPressed: selectFile, child: Text("Edit Photo"))
                         ],
                       ),
                     ),
@@ -119,7 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,8 +137,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     Text(
                                       '${username}',
-                                      style: TextStyle(
-                                          fontSize: 15),
+                                      style: TextStyle(fontSize: 15),
                                     )
                                   ],
                                 ),
@@ -201,11 +204,13 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       "(app name) uses this information to verify your identity and  to "
-                          "keep our community safe. You decide what "
-                          "personal details you make visible to others",
+                      "keep our community safe. You decide what "
+                      "personal details you make visible to others",
                       style: TextStyle(fontSize: 17),
                     ),
                   ]));

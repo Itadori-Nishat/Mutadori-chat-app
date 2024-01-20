@@ -16,6 +16,8 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  bool _obscureText = true;
+
   Future signIn() async{
     showDialog(context: context, builder: (BuildContext context) {
       return const Center(
@@ -28,18 +30,15 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
-    } on FirebaseAuthException catch(e) {
-      if(e.code == "user-not-found"){
-
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text("Email not found",style: TextStyle(fontSize: 18),),    duration: Duration(seconds: 2),  ),);
-      } else if(e.code == "wrong-password"){
+            content: Text("Email not found"),duration: Duration(seconds: 2),),);
+      } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text("Password doesn't match",style: TextStyle(fontSize: 18)),    duration: Duration(seconds: 2),  ),);
+            content: Text("Wrong password"),duration: Duration(seconds: 2),),);
       }
     }
     Navigator.pop(context);
@@ -107,6 +106,8 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextFormField(
+                          obscureText: _obscureText,
+
                           validator: (value) {
                             if(value == null || value!.isEmpty) {
                               return "Enter password";
@@ -114,6 +115,16 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                           },
                           controller: _passwordController,
                           decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
                               contentPadding: const EdgeInsets.only(left: 10),
                               hintText: "password",
                               focusedBorder: OutlineInputBorder(
@@ -140,7 +151,7 @@ class _LoginPageAuthState extends State<LoginPageAuth> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordPage()));
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 6.0),

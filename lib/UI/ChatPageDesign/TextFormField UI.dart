@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -58,6 +59,34 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
     }
   }
 
+  final picker = ImagePicker();
+  bool _uploading = false; // To control the state of image uploading
+
+  Future<void> uploadImage(BuildContext context) async {
+    setState(() {
+      _uploading = true; // Set uploading to true when the process starts
+    });
+
+    try {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        File imageFile = File(pickedFile.path);
+        Reference ref = FirebaseStorage.instance.ref().child('images').child('image.jpg');
+        UploadTask uploadTask = ref.putFile(imageFile);
+        String downloadURL = await (await uploadTask).ref.getDownloadURL();
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('Error: $e');
+    } finally {
+      setState(() {
+        _uploading = false; // Set uploading to false when the process completes
+      });
+    }
+  }
+
   //
   // File? selectedPhoto;
   // void _uploadPhoto() async {
@@ -72,18 +101,47 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
   //     });
   //   }
   // }
+  //
+  // File? _pickedImage;
+  // Future _pickImage() async {
+  //   final picker = ImagePicker();
+  //   final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  //
+  //   setState(() {
+  //     if (pickedImage != null) {
+  //       _pickedImage = File(pickedImage.path);
+  //     }
+  //   });
+  // }
 
-  File? _pickedImage;
-  Future _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedImage != null) {
-        _pickedImage = File(pickedImage.path);
-      }
-    });
-  }
+  // final picker = ImagePicker();
+  //
+  // Future<void> uploadImage() async {
+  //   try {
+  //     // Get image from gallery
+  //     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  //
+  //     if (pickedFile != null) {
+  //       // Get the file path from the picked image
+  //       File imageFile = File(pickedFile.path);
+  //
+  //       // Reference to the Firebase Storage location
+  //       Reference ref = FirebaseStorage.instance.ref().child('images').child('image.jpg');
+  //
+  //       // Upload the image to Firebase Storage
+  //       UploadTask uploadTask = ref.putFile(imageFile);
+  //
+  //       // Get the download URL of the uploaded image
+  //       String downloadURL = await (await uploadTask).ref.getDownloadURL();
+  //
+  //       // Use the download URL or perform any other operations (e.g., save it to Firestore)
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   }
+  // }
 
 
   @override
@@ -93,7 +151,9 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
       child: Row(
         children: [
           GestureDetector(
-            onTap: _pickImage,
+            onTap: () {
+              uploadImage(context);
+            },
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.grey.shade300, shape: BoxShape.circle),
@@ -122,7 +182,13 @@ class _TextFieldDecorationPageState extends State<TextFieldDecorationPage> {
                       borderRadius: BorderRadius.circular(20))),
             ),
           ),
-          IconButton(onPressed: SendMessage, icon: const Icon(Icons.send))
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: GestureDetector(
+              onTap: SendMessage,
+                child: Icon(Icons.send)),
+          )
+
         ],
       ),
     );
